@@ -29,32 +29,31 @@ class Cart:
         #   if not item["available"]:   raise OutOfStockError(...)
         if (item["available"]==False):
             raise OutOfStockError("Item is out of stock")
-     #   checker:bool = False
-     #   new_dic={"item_id": item["id"], "name": item["name"], "price": item["price"], "qty": qty}
-     #   for i in self.lines:
-      #      if (i["item_id"]==item["id"]):
-      #          checker=True
-     #           i["qty"]=i["qty"]+qty
-     #           break
-     #       if(checker==False):
-    #            self.lines.append(new_dic)
+        checker:bool = False
+        new_dic={"item_id": item["id"], "name": item["name"], "price": item["price"], "qty": qty}
+        for i in self.lines:
+            if (i["item_id"]==item["id"]):
+                checker=True
+                i["qty"]=i["qty"]+qty
+                break
+        if(checker==False):
+            self.lines.append(new_dic)
 
         
-        raise NotImplementedError
 
     def remove_item(self, item_id: int) -> None:
         # TODO: raise KeyError if the item is not in the cart
         checker:bool=False
         for line in self.lines:
-            if line["id"]==item_id:
-                checker=True
-        if(checker== False):
+            if line["item_id"] == item_id:
+                checker = True
+                self.lines.remove(line)
+                break
+
+        if checker == False:
             raise KeyError(item_id)
-        else:
-            remove_dico=self.lines[item_id-1]
-            self.lines.remove(remove_dico)
             
-        raise NotImplementedError
+        
 
     def total(self) -> float:
         return round(sum(line["price"] * line["qty"] for line in self.lines), 2)

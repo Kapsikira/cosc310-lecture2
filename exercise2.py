@@ -37,26 +37,26 @@ class Cart:
         
 
 
-        
-
     def remove_item(self, item_id: int) -> None:
         # TODO
-        remove_dico=self.lines[item_id-1]
-        self.lines.remove(remove_dico)
+        for i in self.lines:
+            if i["item_id"] == item_id:
+                self.lines.remove(i)
+                break
 
-        raise NotImplementedError
+        
 
     def clear(self) -> None:
         # TODO
         self.lines.clear()
-        raise NotImplementedError
+       
 
     def total(self) -> float:
         # TODO - round ONCE, at the end
         s:float=0
         for i in self.lines:
             s=s+(i["price"]*i["qty"])
-        return s
+        return round(s,2)
 
         
 
@@ -82,5 +82,4 @@ if __name__ == "__main__":
     print(cart)                  # <Cart 2 items, $40.50>
     print(len(cart.lines))       # 2
     print(cart.total())          # 40.5
-    for i in cart.lines:
-        print(i)
+
